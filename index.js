@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 app.get('/',(req,res) =>{
-    res.send('hi');
+    res.redirect('/login');
 })
 
 const path = require('path');

@@ -67,12 +67,34 @@ function SignIn(props) {
     event.preventDefault();
     const people = await Axios.get('https://swapi.co/api/people/');
     let loginFound = false;
-    people.data.results.map(swChar => {
-      if ((swChar.name === email) && (swChar.birth_year === pass)) {
-        props.history.push('app')
+    let myArr =  people.data.results;
+
+
+
+    for (var i = 0; i < myArr.length; i++) {
+      if ((myArr[i].name === email) && (myArr[i].birth_year === pass)) {
+        loginFound=true;
+        break;
       }
-    })
-    alert('Invalid Username or Password')
+    }
+
+    if(loginFound===true){
+      props.history.push('app');
+    }
+    else{
+      alert('Invalid Username or Password')
+    }
+
+    // people.data.results.map(swChar => {
+    //   if ((swChar.name === email) && (swChar.birth_year === pass)) {
+    //     props.history.push('app');
+        
+    //   }
+    //   else{
+    //     alert('Invalid Username or Password')
+    //   }
+    // })
+    
 
   }
 
