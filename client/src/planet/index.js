@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
-import CustomLoader from './Loader';
 import { Document, Page } from 'react-pdf';
-import renderPdf from '../Resume_Avinash_6Years_MERN_Developer.pdf';
 import MediaCard from './Card'
 import axios from 'axios';
-import IntegrationReactSelect from './Search'
 import Playground from './Search';
 import image from '../sw.jpg'
 import { Grid } from '@material-ui/core';
 import swimage from '../sw.svg'
-import CenteredGrid from './Mygrid'
-import { height } from '@material-ui/system';
-import MediaQuery from 'react-responsive';
-import { Z_FIXED } from 'zlib';
-import { sign } from 'crypto';
+
 
 var getData = async () => {
   let res = await axios.get('https://api.themoviedb.org/3/movie/157336?&api_key=cfe422613b250f702980a3bbf9e90716');
@@ -53,51 +46,71 @@ var sectionStyle = {
   position: 'absolute',
   top: 0,
   border: 0,
-  right:0,
+  right: 0,
   /* Preserve aspet ratio */
   minWidth: '100%',
   minHeight: '100%',
 
 };
 
-const handleSearch = () => {
-  console.log('Logged Click')
-}
-
-
-class App extends Component {
-
-  renderMobile() {
-    return (
-      <div>
-        <Grid container spacing={9} justify='center' style={{ marginTop: 60 }}>
-          <Grid item xs={6} >
-            <svg src={swimage}  width="54px" height="54px" viewBox="0 0 54 54" version="1.1"/>
-          </Grid>
-          <Grid item xs={10} >
-            <Playground />
-          </Grid>
-
-        </Grid>
-
-        <Grid container justify='center'>
-
-
-          <Grid item xs={11}  >
-            <MediaCard {...props} data='data' fontsize='250%' />
-          </Grid>
-
-          <Grid item xs={11} >
-            <MediaCard {...props} data='image' />
-          </Grid>
 
 
 
+class swApp extends Component {
 
-        </Grid>
-      </div>
+  constructor(props) {
+    super(props)
 
-    );
+    this.state = {
+      planets: {},
+      selectedPlanet: {
+        value: {
+          "name": "Alderaan",
+          "rotation_period": "24",
+          "orbital_period": "364",
+          "diameter": "12500",
+          "climate": "temperate",
+          "gravity": "1 standard",
+          "terrain": "grasslands, mountains",
+          "surface_water": "40",
+          "population": "2000000000",
+          "residents": [
+            "https://swapi.co/api/people/5/",
+            "https://swapi.co/api/people/68/",
+            "https://swapi.co/api/people/81/"
+          ],
+          "films": [
+            "https://swapi.co/api/films/6/",
+            "https://swapi.co/api/films/1/"
+          ],
+          "created": "2014-12-10T11:35:48.479000Z",
+          "edited": "2014-12-20T20:58:18.420000Z",
+          "url": "https://swapi.co/api/planets/2/"
+        }
+      },
+    }
+
+  }
+  handleSearch = (e, value) => {
+    if (value != undefined ) {
+      
+      this.setState({
+        selectedPlanet: { value }
+      })
+      console.log('in index',this.state.selectedPlanet)
+    }
+  }
+
+
+
+
+
+  async componentDidMount() {
+    let planets = await axios.get('https://swapi.co/api/planets/');
+
+    this.setState({
+      planets
+    })
 
   }
 
@@ -110,7 +123,7 @@ class App extends Component {
             <img src={swimage} width="150  px" height="54px" viewBox="0 0 54 54" version="1.1" />
           </Grid>
           <Grid item xs={4} >
-            <Playground buttonClick={handleSearch.bind(this)} />
+            <Playground buttonClick={this.handleSearch} planetsData={this.state.planets.data} />
           </Grid>
 
 
@@ -119,11 +132,11 @@ class App extends Component {
         <Grid container justify='center'>
 
           <Grid item xs={4} justify='center'   >
-            <MediaCard {...props} data='image' />
+            <MediaCard  data='image' planetData={this.state.selectedPlanet} />
           </Grid>
 
           <Grid item xs={5} justify='center'   >
-            <MediaCard {...props} data='data' />
+            <MediaCard  data='data' planetData={this.state.selectedPlanet}/>
           </Grid>
 
 
@@ -141,12 +154,7 @@ class App extends Component {
 
       <section style={sectionStyle}>
 
-        <div>
-          {this.renderLaptop()}
-          {/* <MediaQuery minWidth={1024} >
-            {this.renderLaptop()}</MediaQuery>
-          <MediaQuery maxDeviceWidth={1224}>{this.renderMobile()}</MediaQuery> */}
-        </div>
+        {this.renderLaptop()}
 
 
       </section>
@@ -157,4 +165,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default swApp;

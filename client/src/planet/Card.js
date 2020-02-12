@@ -11,6 +11,7 @@ import image from '../swmp.jpg';
 import axios from 'axios';
 import { inherits } from 'util';
 import { Grid } from '@material-ui/core';
+import { useState } from 'react';
 
 
 const useStyles = makeStyles({
@@ -23,12 +24,21 @@ const useStyles = makeStyles({
   },
 });
 
-const MediaCard = ({ auth, data,fontsize }) => {
+const MediaCard = (props) => {
+  const { auth, data,fontsize,planetData} = props;
   const classes = useStyles();
 
-  console.log('hi', fontsize)
+  const [requiredPlanetData, setPlanet] = useState(planetData);
+
+  const {name,created,climate,population,diameter} = planetData.value
+
+  // console.log('inside card',planetData.value.created);
+  // console.log('name',planetData.value.climate  )
+  // const {name,created,gravity,population} = planetData.value;
+
+  // console.log(name);
   return (
-    <Card className={classes.card}>
+     <Card className={classes.card}>
       <CardActionArea>
         {data === 'image' &&
 
@@ -44,36 +54,36 @@ const MediaCard = ({ auth, data,fontsize }) => {
           <CardContent>
             <div style={{padding:20,fontFamily:'Lato,sans-serif',lineHeight: '1.5',fontSize:fontsize}}>
 
-            <Typography style={{ color: 'white', marginTop: 10, fontSize: '2.2em', fontWeight: 700 }} variant='h3'>INTERSTELLAR</Typography>
+            <Typography style={{ color: 'white', marginTop: 10, fontSize: '2.2em', fontWeight: 700 }} variant='h3'>Star Wars</Typography>
 
             <span style={{ color: '#00FC87', fontFamily: 'Oswald,sans-serif', fontSize: '1.3em', paddingBottom: '.25em' }}>Mankind was born on Earth. It was never meant to die here.</span>
-            <p style={{ color: '#fafafa' }}>Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.</p>
-            <span style={{ color: '#00FC87', fontFamily: 'Oswald,sans-serif', fontSize: '1.4em', display: 'block', paddingBottom: '.25em' }}>Adventure, Drama, Science Fiction</span>
-            <span style={{ color: '#fafafa' }}>Legendary Entertainment, Syncopy, Lynda Obst Productions</span>
+            <p style={{ color: '#fafafa' }}>A young boy, Anakin is rescued from slavery, trained by jedi's, groomed by the Sith, has an affair with a princess, gets her pregnant, finds his dying mother, avengers her death, gets coerced to embrace the dark side, nearly dies but is saved by the Sith. Becomes a Lord.</p>
+            <span style={{ color: '#00FC87', fontFamily: 'Oswald,sans-serif', fontSize: '1.4em', display: 'block', paddingBottom: '.25em' }}>{}</span>
+            <span style={{ color: '#00FC87', fontFamily: 'Oswald,sans-serif', fontSize: '1.3em', paddingBottom: '.25em' }}>{name}:</span>
 
-            <Grid container >
+            <Grid container spacing='6'>
               <Grid item xs='6'>
-                <span style={{ color: '#fafafa' }}>hi</span>
+                <span style={{ color: '#fafafa' }}>Created:</span>
                 <br></br>
-                <span style={{ color: '#fafafa' }}>hi</span>
-
-              </Grid>
-              <Grid item xs='6'>
-                <span style={{ color: '#fafafa' }}>hi</span>
-                <br></br>
-                <span style={{ color: '#fafafa' }}>hi</span>
+                <span style={{ color: '#fafafa' }}>{created}</span>
 
               </Grid>
               <Grid item xs='6'>
-                <span style={{ color: '#fafafa' }}>hi</span>
+                <span style={{ color: '#fafafa' }}>Population</span>
                 <br></br>
-                <span style={{ color: '#fafafa' }}>hi</span>
+                <span style={{ color: '#fafafa' }}>{population}</span>
 
               </Grid>
               <Grid item xs='6'>
-                <span style={{ color: '#fafafa' }}>hi</span>
+                <span style={{ color: '#fafafa' }}>Diameter</span>
                 <br></br>
-                <span style={{ color: '#fafafa' }}>hi</span>
+                <span style={{ color: '#fafafa' }}>{diameter}</span>
+
+              </Grid>
+              <Grid item xs='6'>
+                <span style={{ color: '#fafafa' }}>Climate</span>
+                <br></br>
+                <span style={{ color: '#fafafa' }}>{climate}</span>
 
               </Grid>
 

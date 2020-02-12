@@ -7,6 +7,7 @@ module.exports = {
     output: {
         filename: '[name].js',
         chunkFilename: '[name].chunk.js',
+        publicPath: '/'
     },
     module:{
         rules:[{
@@ -82,7 +83,8 @@ module.exports = {
     ]
     },
     devServer: {
-        port: 9001
+        port: 9001,
+        historyApiFallback: true,
       },
       optimization: {
         splitChunks: {
